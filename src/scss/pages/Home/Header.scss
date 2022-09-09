@@ -1,0 +1,52 @@
+@import "scss/common.scss";
+
+.home__header {
+  @include block();
+  padding-top: calcPxToRem(20);
+  position: relative;
+  .home__header-title {
+    @include font($font-weight--bold, 80);
+
+    color: $color-gray;
+  }
+  & .home__header-score-block {
+    display: flex;
+    position: absolute;
+    top: calcPxToRem(20);
+    right: 0;
+
+    .home__header-best-score,
+    .home__header-current-score {
+      @include font($font-weight--bold, 25);
+      position: relative;
+      padding: calcPxToRem(15) calcPxToRem(25);
+      height: 25px;
+      border-radius: calcPxToRem(3);
+      color: $color-white;
+      background-color: $color-brown1;
+      line-height: calcPxToRem(48);
+      &::before {
+        @include font($font-weight--bold, 13);
+        position: absolute;
+        width: 100%;
+        top: calcPxToRem(5);
+        left: 0;
+        text-transform: uppercase;
+        text-align: center;
+        color: $color-brown;
+      }
+    }
+    .home__header-current-score {
+      &::before {
+        content: "score";
+      }
+    }
+
+    .home__header-best-score {
+      margin-left: 10px;
+      &::before {
+        content: "best";
+      }
+    }
+  }
+}

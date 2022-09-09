@@ -1,18 +1,14 @@
-@import '../../common.scss';
+@import "../../common.scss";
 
+.home {
+  background: $color-beige;
+  min-width: 100vh;
+  min-height: 100vh;
 
-.home-container{
-    background: $color-beige;
-    min-width:100vh;
-    min-height:100vh;
-    .home-container__header{
-        @include block()
-    }
-    .home-container__above-game{
-        @include block()
-    }
-    .home-container__game{
-        @include block()
-    }
+  .home__above-game {
+    @include block();
+  }
+  .home__game {
+    @include block();
+  }
 }
-

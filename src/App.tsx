@@ -1,14 +1,13 @@
-import React from "react";
-import "./scss/app.scss";
-import "./scss/pages/Home/index.scss";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "pages/Home";
 
 function App() {
   return (
-    <div className="home-container">
-      <div className="home-container__header">header</div>
-      <div className="home-container__above-game">above-game</div>
-      <div className="home-container__game">game</div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

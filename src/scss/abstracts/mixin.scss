@@ -1,4 +1,12 @@
+@mixin font($font-weight, $font-size-px, $line-height: 140%) {
+  font-family: "Pretendard";
+  line-height: $line-height;
+
+  font-weight: $font-weight;
+  font-size: calcPxToRem($font-size-px);
+}
+
 @mixin block {
-    margin:0 auto;
-    width: calcPxToRem(1000);
+  margin: 0 auto;
+  width: calcPxToRem(500);
 }
