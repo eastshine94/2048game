@@ -1,0 +1,4 @@
+@mixin block {
+    margin:0 auto;
+    width: calcPxToRem(1000);
+}
