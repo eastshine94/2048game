@@ -1,0 +1,24 @@
+@import "scss/common.scss";
+
+.home__above-game {
+  @include block();
+  display: flex;
+  justify-content: space-between;
+  .home__game-intro {
+    @include font($font-weight--medium, 18);
+    color: $color-gray;
+    line-height: calcPxToRem(18);
+    strong {
+      @include font($font-weight--bold, 18);
+    }
+  }
+  .home__restart-button {
+    @include font($font-weight--bold, 20);
+    border: 0;
+    border-radius: calcPxToRem(3);
+    padding: 0 calcPxToRem(20);
+    color: $color-white;
+    background-color: $color-brown2;
+    cursor: pointer;
+  }
+}

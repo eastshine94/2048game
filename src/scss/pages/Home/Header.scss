@@ -20,7 +20,7 @@
       @include font($font-weight--bold, 25);
       position: relative;
       padding: calcPxToRem(15) calcPxToRem(25);
-      height: 25px;
+      height: calcPxToRem(25);
       border-radius: calcPxToRem(3);
       color: $color-white;
       background-color: $color-brown1;
