@@ -1,7 +1,6 @@
 @import "scss/common.scss";
 
 .home__header {
-  @include block();
   padding-top: calcPxToRem(20);
   position: relative;
   .home__header-title {

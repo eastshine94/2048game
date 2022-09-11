@@ -1,0 +1,93 @@
+@import "scss/common.scss";
+
+.home__game {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  .home__game-grid-container {
+    margin-top: calcPxToRem(20);
+    padding: calcPxToRem(16);
+    border-radius: calcPxToRem(3);
+    display: grid;
+    grid-template-columns: repeat(4, calcPxToRem(105));
+    grid-template-rows: repeat(4, calcPxToRem(105));
+    gap: calcPxToRem(16);
+    background-color: $color-brown1;
+  }
+  .home__game-grid-cell {
+    background-color: $color-brown;
+    opacity: 0.5;
+    border-radius: calcPxToRem(3);
+  }
+
+  .home__game-tile-container {
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: calcPxToRem(16);
+  }
+  .home__game-tile-cell {
+    @include font($font-weight--bold, 56);
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: calcPxToRem(105);
+    height: calcPxToRem(105);
+    border-radius: calcPxToRem(3);
+    color: $color-gray;
+    background-color: #fff;
+  }
+
+  // tile-x-y (x,y는 좌표)
+  .home__game-tile-1-1 {
+    transform: translate(calcPxToRem(121 * 0), calcPxToRem(121 * 0));
+  }
+  .home__game-tile-1-2 {
+    transform: translate(calcPxToRem(121 * 0), calcPxToRem(121 * 1));
+  }
+  .home__game-tile-1-3 {
+    transform: translate(calcPxToRem(121 * 0), calcPxToRem(121 * 2));
+  }
+  .home__game-tile-1-4 {
+    transform: translate(calcPxToRem(121 * 0), calcPxToRem(121 * 3));
+  }
+  .home__game-tile-2-1 {
+    transform: translate(calcPxToRem(121 * 1), calcPxToRem(121 * 0));
+  }
+  .home__game-tile-2-2 {
+    transform: translate(calcPxToRem(121 * 1), calcPxToRem(121 * 1));
+  }
+  .home__game-tile-2-3 {
+    transform: translate(calcPxToRem(121 * 1), calcPxToRem(121 * 2));
+  }
+  .home__game-tile-2-4 {
+    transform: translate(calcPxToRem(121 * 1), calcPxToRem(121 * 3));
+  }
+  .home__game-tile-3-1 {
+    transform: translate(calcPxToRem(121 * 2), calcPxToRem(121 * 0));
+  }
+  .home__game-tile-3-2 {
+    transform: translate(calcPxToRem(121 * 2), calcPxToRem(121 * 1));
+  }
+  .home__game-tile-3-3 {
+    transform: translate(calcPxToRem(121 * 2), calcPxToRem(121 * 2));
+  }
+  .home__game-tile-3-4 {
+    transform: translate(calcPxToRem(121 * 2), calcPxToRem(121 * 3));
+  }
+  .home__game-tile-4-1 {
+    transform: translate(calcPxToRem(121 * 3), calcPxToRem(121 * 0));
+  }
+  .home__game-tile-4-2 {
+    transform: translate(calcPxToRem(121 * 3), calcPxToRem(121 * 1));
+  }
+  .home__game-tile-4-3 {
+    transform: translate(calcPxToRem(121 * 3), calcPxToRem(121 * 2));
+  }
+  .home__game-tile-4-4 {
+    transform: translate(calcPxToRem(121 * 3), calcPxToRem(121 * 3));
+  }
+}

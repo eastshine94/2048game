@@ -4,8 +4,8 @@
   background: $color-beige;
   min-width: 100vh;
   min-height: 100vh;
-
-  .home__game {
-    @include block();
+  .home__container {
+    margin: 0 auto;
+    width: calcPxToRem(500);
   }
 }

@@ -6,7 +6,7 @@ export default function AboveGame() {
       <div className="home__game-intro">
         Join the tiles, get to <strong>2048!</strong>
         <br />
-        Have a Good Game
+        Have a good game
       </div>
       <button className="home__restart-button" type="button">
         New Game

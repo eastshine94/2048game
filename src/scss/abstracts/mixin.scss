@@ -5,8 +5,3 @@
   font-weight: $font-weight;
   font-size: calcPxToRem($font-size-px);
 }
-
-@mixin block {
-  margin: 0 auto;
-  width: calcPxToRem(500);
-}
