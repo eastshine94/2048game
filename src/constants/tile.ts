@@ -1,1 +1,1 @@
-export const MAX_POS = 4;
+export const MAX_POS: number = 4;
