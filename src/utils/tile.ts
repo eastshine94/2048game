@@ -45,84 +45,32 @@ export function moveTile(tileList: TileList, x: number, y: number) {
   const isMoveY: boolean = y !== 0;
   const isMinus: boolean = x + y < 0;
   const newTileList: TileList = [...tileList];
-  if (isMoveY) {
-    if (isMinus) {
-      for (let i = 0; i < MAX_POS; i++) {
-        let target = 0;
-        for (let j = 0; j < MAX_POS; j++) {
-          const val = newTileList[MAX_POS * j + i];
-          if (val) {
-            if (target !== j) {
-              newTileList[MAX_POS * j + i] = null;
-              newTileList[MAX_POS * target + i] = {
-                ...val,
-                y: target,
-                isNew: false,
-                isMerged: false,
-              };
-            }
-            target++;
-          }
+
+  for (let i = 0; i < MAX_POS; i++) {
+    let targetPos = isMinus ? 0 : MAX_POS - 1;
+    for (let j = 0; j < MAX_POS; j++) {
+      const currentPos = isMinus ? j : MAX_POS - j - 1;
+      const currentIdx = isMoveY
+        ? convertIndexOf2Dto1D(i, currentPos, MAX_POS)
+        : convertIndexOf2Dto1D(currentPos, i, MAX_POS);
+
+      const tile = newTileList[currentIdx];
+
+      if (tile) {
+        if (targetPos !== currentPos) {
+          const targetIdx = isMoveY
+            ? convertIndexOf2Dto1D(i, targetPos, MAX_POS)
+            : convertIndexOf2Dto1D(targetPos, i, MAX_POS);
+          newTileList[currentIdx] = null;
+          newTileList[targetIdx] = {
+            ...tile,
+            x: !isMoveY ? targetPos : tile.x,
+            y: isMoveY ? targetPos : tile.y,
+            isNew: false,
+            isMerged: false,
+          };
         }
-      }
-    } else {
-      for (let i = 0; i < MAX_POS; i++) {
-        let target = MAX_POS - 1;
-        for (let j = MAX_POS - 1; j >= 0; j--) {
-          const val = newTileList[MAX_POS * j + i];
-          if (val) {
-            if (target !== j) {
-              newTileList[MAX_POS * j + i] = null;
-              newTileList[MAX_POS * target + i] = {
-                ...val,
-                y: target,
-                isNew: false,
-                isMerged: false,
-              };
-            }
-            target--;
-          }
-        }
-      }
-    }
-  } else {
-    if (isMinus) {
-      for (let i = 0; i < MAX_POS; i++) {
-        let target = 0;
-        for (let j = 0; j < MAX_POS; j++) {
-          const val = newTileList[MAX_POS * i + j];
-          if (val) {
-            if (target !== j) {
-              newTileList[MAX_POS * i + j] = null;
-              newTileList[MAX_POS * i + target] = {
-                ...val,
-                x: target,
-                isNew: false,
-                isMerged: false,
-              };
-            }
-            target++;
-          }
-        }
-      }
-    } else {
-      for (let i = 0; i < MAX_POS; i++) {
-        let target = MAX_POS - 1;
-        for (let j = MAX_POS - 1; j >= 0; j--) {
-          const val = newTileList[MAX_POS * i + j];
-          if (val) {
-            if (target !== j) {
-              newTileList[MAX_POS * i + j] = null;
-              newTileList[MAX_POS * i + target] = {
-                ...val,
-                x: target,
-                isNew: false,
-                isMerged: false,
-              };
-            }
-            target--;
-          }
-        }
+        isMinus ? targetPos++ : targetPos--;
       }
     }
   }
