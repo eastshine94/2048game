@@ -45,7 +45,41 @@ export function moveTile(tileList: TileList, x: number, y: number) {
   const isMoveY: boolean = y !== 0;
   const isMinus: boolean = x + y < 0;
   const newTileList: TileList = [...tileList];
+  //merge tile
+  for (let i = 0; i < MAX_POS; i++) {
+    let targetIdx = -1;
+    for (let j = 0; j < MAX_POS; j++) {
+      const currentPos = isMinus ? j : MAX_POS - j - 1;
+      const currentIdx = isMoveY
+        ? convertIndexOf2Dto1D(i, currentPos, MAX_POS)
+        : convertIndexOf2Dto1D(currentPos, i, MAX_POS);
 
+      const tile1 = newTileList[currentIdx];
+
+      if (tile1) {
+        if (targetIdx < 0) {
+          targetIdx = currentIdx;
+        } else if (targetIdx !== currentIdx) {
+          const tile2 = newTileList[targetIdx];
+
+          if (tile1.value === tile2?.value) {
+            newTileList[targetIdx] = {
+              ...tile2,
+              value: tile2?.value * 2,
+              isNew: false,
+              isMerged: true,
+            };
+            newTileList[currentIdx] = null;
+            targetIdx = -1;
+          } else {
+            targetIdx = currentIdx;
+          }
+        }
+      }
+    }
+  }
+
+  // move tile
   for (let i = 0; i < MAX_POS; i++) {
     let targetPos = isMinus ? 0 : MAX_POS - 1;
     for (let j = 0; j < MAX_POS; j++) {

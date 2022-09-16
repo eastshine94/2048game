@@ -26,7 +26,7 @@ export default function Game() {
                 className={`home__game-tile-cell home__game-tile-${
                   item.x + 1
                 }-${item.y + 1}`}
-                key={`tile_${item.id}`}
+                key={item.id}
               >
                 {item.value}
               </div>
