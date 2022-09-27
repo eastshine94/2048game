@@ -9,7 +9,7 @@ import "scss/pages/Home/Game.scss";
 const initTileList = getInitialTileList();
 export default function Game() {
   const [tileList, setTileList] = useState<TileList>(initTileList);
-  useMoveTile({ tileList, setTileList });
+  useMoveTile({ setTileList });
 
   return (
     <div className="home__game">

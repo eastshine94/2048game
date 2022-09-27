@@ -1,25 +1,33 @@
 import { MAX_POS } from "constants/tile";
+import isNull from "lodash/isNull";
 import { Tile, TileList } from "types/tile";
 import { convertIndexOf2Dto1D, getRandomInteger } from "./number";
 
-export function getInitialTileList() {
-  const tileList: TileList = Array.from(
-    new Array(MAX_POS * MAX_POS),
-    () => null
-  );
-  const tile1 = makeTile(tileList);
-  if (!tile1) return tileList;
-  const tile1Idx = convertIndexOf2Dto1D(tile1.x, tile1.y, MAX_POS);
-  tileList[tile1Idx] = tile1;
+const tilePosList: TileList = Array.from(
+  new Array(MAX_POS * MAX_POS),
+  () => null
+);
 
-  const tile2 = makeTile(tileList);
-  if (!tile2) return tileList;
-  const tile2Idx = convertIndexOf2Dto1D(tile2.x, tile2.y, MAX_POS);
-  tileList[tile2Idx] = tile2;
-  return tileList;
+function sortTileList(tileList: TileList) {
+  return [...tileList].sort((a, b) =>
+    isNull(a) ? 1 : isNull(b) ? -1 : a.id - b.id
+  );
 }
 
-let currentId = 0;
+export function getInitialTileList() {
+  const tile1 = makeTile(tilePosList);
+  if (!tile1) return tilePosList;
+  const tile1Idx = convertIndexOf2Dto1D(tile1.x, tile1.y, MAX_POS);
+  tilePosList[tile1Idx] = tile1;
+
+  const tile2 = makeTile(tilePosList);
+  if (!tile2) return tilePosList;
+  const tile2Idx = convertIndexOf2Dto1D(tile2.x, tile2.y, MAX_POS);
+  tilePosList[tile2Idx] = tile2;
+  return sortTileList(tilePosList);
+}
+
+let currentId = 1;
 export function makeTile(tileList: TileList): Tile | null {
   const findBlankIdx = tileList.findIndex((item) => !item);
 
@@ -41,43 +49,10 @@ export function makeTile(tileList: TileList): Tile | null {
   return tile;
 }
 
-export function moveTile(tileList: TileList, x: number, y: number) {
+export function moveTile(x: number, y: number) {
   const isMoveY: boolean = y !== 0;
   const isMinus: boolean = x + y < 0;
-  const newTileList: TileList = [...tileList];
-  //merge tile
-  for (let i = 0; i < MAX_POS; i++) {
-    let targetIdx = -1;
-    for (let j = 0; j < MAX_POS; j++) {
-      const currentPos = isMinus ? j : MAX_POS - j - 1;
-      const currentIdx = isMoveY
-        ? convertIndexOf2Dto1D(i, currentPos, MAX_POS)
-        : convertIndexOf2Dto1D(currentPos, i, MAX_POS);
-
-      const tile1 = newTileList[currentIdx];
-
-      if (tile1) {
-        if (targetIdx < 0) {
-          targetIdx = currentIdx;
-        } else if (targetIdx !== currentIdx) {
-          const tile2 = newTileList[targetIdx];
-
-          if (tile1.value === tile2?.value) {
-            newTileList[targetIdx] = {
-              ...tile2,
-              value: tile2?.value * 2,
-              isNew: false,
-              isMerged: true,
-            };
-            newTileList[currentIdx] = null;
-            targetIdx = -1;
-          } else {
-            targetIdx = currentIdx;
-          }
-        }
-      }
-    }
-  }
+  const newTileList: TileList = [];
 
   // move tile
   for (let i = 0; i < MAX_POS; i++) {
@@ -88,26 +63,75 @@ export function moveTile(tileList: TileList, x: number, y: number) {
         ? convertIndexOf2Dto1D(i, currentPos, MAX_POS)
         : convertIndexOf2Dto1D(currentPos, i, MAX_POS);
 
-      const tile = newTileList[currentIdx];
+      const currentTile = tilePosList[currentIdx];
 
-      if (tile) {
+      if (currentTile) {
         if (targetPos !== currentPos) {
           const targetIdx = isMoveY
             ? convertIndexOf2Dto1D(i, targetPos, MAX_POS)
             : convertIndexOf2Dto1D(targetPos, i, MAX_POS);
-          newTileList[currentIdx] = null;
-          newTileList[targetIdx] = {
-            ...tile,
-            x: !isMoveY ? targetPos : tile.x,
-            y: isMoveY ? targetPos : tile.y,
-            isNew: false,
-            isMerged: false,
-          };
+
+          const targetTile = tilePosList[targetIdx];
+
+          if (targetTile) {
+            //merge
+            if (currentTile.value === targetTile.value) {
+              tilePosList[targetIdx] = {
+                id: currentId++,
+                x: !isMoveY ? targetPos : targetTile.x,
+                y: isMoveY ? targetPos : targetTile.y,
+                value: targetTile.value * 2,
+                isNew: false,
+                isMerged: true,
+              };
+
+              tilePosList[currentIdx] = null;
+              newTileList.push({
+                ...currentTile,
+                x: !isMoveY ? targetPos : targetTile.x,
+                y: isMoveY ? targetPos : targetTile.y,
+                isNew: false,
+                isMerged: false,
+              });
+              newTileList.push({
+                ...targetTile,
+                x: !isMoveY ? targetPos : targetTile.x,
+                y: isMoveY ? targetPos : targetTile.y,
+                isNew: false,
+                isMerged: false,
+              });
+            }
+            // move
+            else {
+              const nextPos = isMinus ? targetPos + 1 : targetPos - 1;
+              const nextIdx = isMoveY
+                ? convertIndexOf2Dto1D(i, nextPos, MAX_POS)
+                : convertIndexOf2Dto1D(nextPos, i, MAX_POS);
+              tilePosList[currentIdx] = null;
+              tilePosList[nextIdx] = {
+                ...currentTile,
+                x: !isMoveY ? nextPos : currentTile.x,
+                y: isMoveY ? nextPos : currentTile.y,
+                isNew: false,
+                isMerged: false,
+              };
+            }
+            isMinus ? targetPos++ : targetPos--;
+          } else {
+            //move
+            tilePosList[currentIdx] = null;
+            tilePosList[targetIdx] = {
+              ...currentTile,
+              x: !isMoveY ? targetPos : currentTile.x,
+              y: isMoveY ? targetPos : currentTile.y,
+              isNew: false,
+              isMerged: false,
+            };
+          }
         }
-        isMinus ? targetPos++ : targetPos--;
       }
     }
   }
 
-  return newTileList;
+  return sortTileList([...tilePosList, ...newTileList]);
 }

@@ -4,17 +4,16 @@ import { TileList } from "types/tile";
 import { moveTile } from "utils/tile";
 
 interface Props {
-  tileList: TileList;
   setTileList: React.Dispatch<React.SetStateAction<TileList>>;
 }
 
-export default function useMoveTile({ tileList, setTileList }: Props) {
+export default function useMoveTile({ setTileList }: Props) {
   const moveAndAdd = useCallback(
     (x: number, y: number) => {
-      const newTileList = moveTile(tileList, x, y);
+      const newTileList = moveTile(x, y);
       setTileList(newTileList);
     },
-    [setTileList, tileList]
+    [setTileList]
   );
 
   const handleKeyDown = useCallback(
