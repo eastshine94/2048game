@@ -53,7 +53,7 @@ export function moveTile(x: number, y: number) {
   const isMoveY: boolean = y !== 0;
   const isMinus: boolean = x + y < 0;
   const newTileList: TileList = [];
-
+  let numOfChanges = 0;
   // move tile
   for (let i = 0; i < MAX_POS; i++) {
     let targetPos = isMinus ? 0 : MAX_POS - 1;
@@ -74,7 +74,7 @@ export function moveTile(x: number, y: number) {
           const targetTile = tilePosList[targetIdx];
 
           if (targetTile) {
-            //merge
+            // 타일 합치기
             if (currentTile.value === targetTile.value) {
               tilePosList[targetIdx] = {
                 id: currentId++,
@@ -100,25 +100,29 @@ export function moveTile(x: number, y: number) {
                 isNew: false,
                 isMerged: false,
               });
+              numOfChanges++;
             }
-            // move
+            // merge하지 않고, tile 움직임
             else {
               const nextPos = isMinus ? targetPos + 1 : targetPos - 1;
-              const nextIdx = isMoveY
-                ? convertIndexOf2Dto1D(i, nextPos, MAX_POS)
-                : convertIndexOf2Dto1D(nextPos, i, MAX_POS);
-              tilePosList[currentIdx] = null;
-              tilePosList[nextIdx] = {
-                ...currentTile,
-                x: !isMoveY ? nextPos : currentTile.x,
-                y: isMoveY ? nextPos : currentTile.y,
-                isNew: false,
-                isMerged: false,
-              };
+              if (nextPos !== currentPos) {
+                const nextIdx = isMoveY
+                  ? convertIndexOf2Dto1D(i, nextPos, MAX_POS)
+                  : convertIndexOf2Dto1D(nextPos, i, MAX_POS);
+                tilePosList[currentIdx] = null;
+                tilePosList[nextIdx] = {
+                  ...currentTile,
+                  x: !isMoveY ? nextPos : currentTile.x,
+                  y: isMoveY ? nextPos : currentTile.y,
+                  isNew: false,
+                  isMerged: false,
+                };
+                numOfChanges++;
+              }
             }
             isMinus ? targetPos++ : targetPos--;
           } else {
-            //move
+            // tile 움직임
             tilePosList[currentIdx] = null;
             tilePosList[targetIdx] = {
               ...currentTile,
@@ -127,9 +131,17 @@ export function moveTile(x: number, y: number) {
               isNew: false,
               isMerged: false,
             };
+            numOfChanges++;
           }
         }
       }
+    }
+  }
+  if (numOfChanges > 0) {
+    const newTile = makeTile(tilePosList);
+    if (newTile) {
+      const newTileIdx = convertIndexOf2Dto1D(newTile.x, newTile.y, MAX_POS);
+      tilePosList[newTileIdx] = newTile;
     }
   }
 
