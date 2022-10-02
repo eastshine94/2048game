@@ -72,26 +72,32 @@
   .home__game-tile-val-128 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow;
+    font-size: calcPxToRem(45);
   }
   .home__game-tile-val-256 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow1;
+    font-size: calcPxToRem(45);
   }
   .home__game-tile-val-512 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow2;
+    font-size: calcPxToRem(45);
   }
   .home__game-tile-val-1024 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow3;
+    font-size: calcPxToRem(35);
   }
   .home__game-tile-val-2048 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow4;
+    font-size: calcPxToRem(35);
   }
   .home__game-tile-val-4096 .home__tile-inner {
     color: $color-white;
     background-color: $color-yellow5;
+    font-size: calcPxToRem(35);
   }
 
   // tile-x-y (x,y는 좌표)
@@ -171,7 +177,7 @@
 }
 
 .home__tile-merged .home__tile-inner {
-  animation: 200ms ease-in-out 100ms merge;
+  animation: 200ms ease-in-out 200ms merge;
   animation-fill-mode: backwards;
   z-index: 20;
 }
