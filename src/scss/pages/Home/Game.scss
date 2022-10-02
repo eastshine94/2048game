@@ -38,8 +38,56 @@
     height: calcPxToRem(105);
     border-radius: calcPxToRem(3);
     color: $color-gray;
-    background-color: #fff;
+    background-color: $color-white;
     transition: transform 100ms ease-in-out;
+  }
+
+  // 타일 값에 따른 스타일
+  .home__game-tile-val-2 {
+    background-color: $color-brown;
+  }
+  .home__game-tile-val-4 {
+    background-color: $color-brown3;
+  }
+  .home__game-tile-val-8 {
+    color: $color-white;
+    background-color: $color-orange;
+  }
+  .home__game-tile-val-16 {
+    color: $color-white;
+    background-color: $color-orange1;
+  }
+  .home__game-tile-val-32 {
+    color: $color-white;
+    background-color: $color-orange2;
+  }
+  .home__game-tile-val-64 {
+    color: $color-white;
+    background-color: $color-orange3;
+  }
+  .home__game-tile-val-128 {
+    color: $color-white;
+    background-color: $color-yellow;
+  }
+  .home__game-tile-val-256 {
+    color: $color-white;
+    background-color: $color-yellow1;
+  }
+  .home__game-tile-val-512 {
+    color: $color-white;
+    background-color: $color-yellow2;
+  }
+  .home__game-tile-val-1024 {
+    color: $color-white;
+    background-color: $color-yellow3;
+  }
+  .home__game-tile-val-2048 {
+    color: $color-white;
+    background-color: $color-yellow4;
+  }
+  .home__game-tile-val-4096 {
+    color: $color-white;
+    background-color: $color-yellow5;
   }
 
   // tile-x-y (x,y는 좌표)

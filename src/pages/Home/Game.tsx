@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import times from "lodash/times";
+import cn from "classnames";
 import useMoveTile from "hooks/useMoveTile";
 import { getInitialTileList } from "utils/tile";
 import { MAX_POS } from "constants/tile";
@@ -23,9 +24,11 @@ export default function Game() {
           (item) =>
             item && (
               <div
-                className={`home__game-tile-cell home__game-tile-${
-                  item.x + 1
-                }-${item.y + 1}`}
+                className={cn(
+                  `home__game-tile-cell home__game-tile-val-${
+                    item.value
+                  } home__game-tile-${item.x + 1}-${item.y + 1}`
+                )}
                 key={item.id}
               >
                 {item.value}
