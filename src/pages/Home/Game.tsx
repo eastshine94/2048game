@@ -27,11 +27,13 @@ export default function Game() {
                 className={cn(
                   `home__game-tile-cell home__game-tile-val-${
                     item.value
-                  } home__game-tile-${item.x + 1}-${item.y + 1}`
+                  } home__game-tile-${item.x + 1}-${item.y + 1}`,
+                  { "home__tile-new": item.isNew },
+                  { "home__tile-merged": item.isMerged }
                 )}
                 key={item.id}
               >
-                {item.value}
+                <div className="home__tile-inner">{item.value}</div>
               </div>
             )
         )}
