@@ -7,10 +7,15 @@ import { MAX_POS } from "constants/tile";
 import { TileList } from "types/tile";
 import "scss/pages/Home/Game.scss";
 
+interface Props {
+  setScore: React.Dispatch<React.SetStateAction<number>>;
+}
+
 const initTileList = getInitialTileList();
-export default function Game() {
+
+export default function Game({ setScore }: Props) {
   const [tileList, setTileList] = useState<TileList>(initTileList);
-  useMoveTile({ setTileList });
+  useMoveTile({ setTileList, setScore });
 
   return (
     <div className="home__game">

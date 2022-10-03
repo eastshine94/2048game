@@ -3,7 +3,7 @@ import isNull from "lodash/isNull";
 import { Tile, TileList } from "types/tile";
 import { convertIndexOf2Dto1D, getRandomInteger } from "./number";
 
-const tilePosList: TileList = Array.from(
+let tilePosList: TileList = Array.from(
   new Array(MAX_POS * MAX_POS),
   () => null
 );
@@ -54,6 +54,18 @@ export function moveTile(x: number, y: number) {
   const isMinus: boolean = x + y < 0;
   const newTileList: TileList = [];
   let numOfChanges = 0;
+
+  // tilePosList 초기화
+  tilePosList = tilePosList.map((item) =>
+    item
+      ? {
+          ...item,
+          isNew: false,
+          isMerged: false,
+        }
+      : null
+  );
+
   // move tile
   for (let i = 0; i < MAX_POS; i++) {
     let targetPos = isMinus ? 0 : MAX_POS - 1;

@@ -5,15 +5,20 @@ import { moveTile } from "utils/tile";
 
 interface Props {
   setTileList: React.Dispatch<React.SetStateAction<TileList>>;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function useMoveTile({ setTileList }: Props) {
+export default function useMoveTile({ setTileList, setScore }: Props) {
   const moveAndAdd = useCallback(
     (x: number, y: number) => {
       const newTileList = moveTile(x, y);
       setTileList(newTileList);
+      const score = newTileList.reduce((acc, curr) => {
+        return curr?.isMerged ? acc + curr.value : acc;
+      }, 0);
+      setScore((v) => v + score);
     },
-    [setTileList]
+    [setScore, setTileList]
   );
 
   const handleKeyDown = useCallback(
