@@ -159,3 +159,8 @@ export function moveTile(x: number, y: number) {
 
   return sortTileList([...tilePosList, ...newTileList]);
 }
+
+export function resetTileList(): TileList {
+  tilePosList = Array.from(new Array(MAX_POS * MAX_POS), () => null);
+  return getInitialTileList();
+}

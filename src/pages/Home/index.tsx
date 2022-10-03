@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useMoveTile from "hooks/useMoveTile";
+import { getInitialTileList, resetTileList } from "utils/tile";
+import { getLocalItem, setLocalItem } from "utils/storage";
+import { TileList } from "types/tile";
+
 import AboveGame from "./AboveGame";
 import Game from "./Game";
-import { useEffect } from "react";
 import Header from "./Header";
-import { getLocalItem, setLocalItem } from "utils/storage";
+
 import "scss/app.scss";
 import "scss/pages/Home/index.scss";
 
+const initTileList = getInitialTileList();
+
 export default function Home() {
+  const [tileList, setTileList] = useState<TileList>(initTileList);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(
     getLocalItem<number>("bestScore") || 0
   );
+
+  useMoveTile({ setTileList, setScore });
+
+  const handleRestartClick = () => {
+    const newTileList = resetTileList();
+    setTileList(newTileList);
+    setScore(0);
+  };
 
   useEffect(() => {
     if (score > bestScore) {
@@ -24,8 +39,8 @@ export default function Home() {
     <div className="home">
       <div className="home__container">
         <Header score={score} bestScore={bestScore} />
-        <AboveGame />
-        <Game setScore={setScore} />
+        <AboveGame handleRestartClick={handleRestartClick} />
+        <Game tileList={tileList} />
       </div>
     </div>
   );

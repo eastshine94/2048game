@@ -1,22 +1,14 @@
-import React, { useState } from "react";
 import times from "lodash/times";
 import cn from "classnames";
-import useMoveTile from "hooks/useMoveTile";
-import { getInitialTileList } from "utils/tile";
 import { MAX_POS } from "constants/tile";
 import { TileList } from "types/tile";
 import "scss/pages/Home/Game.scss";
 
 interface Props {
-  setScore: React.Dispatch<React.SetStateAction<number>>;
+  tileList: TileList;
 }
 
-const initTileList = getInitialTileList();
-
-export default function Game({ setScore }: Props) {
-  const [tileList, setTileList] = useState<TileList>(initTileList);
-  useMoveTile({ setTileList, setScore });
-
+export default function Game({ tileList }: Props) {
   return (
     <div className="home__game">
       <div className="home__game-grid-container">

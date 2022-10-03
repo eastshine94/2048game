@@ -1,6 +1,9 @@
 import "scss/pages/Home/AboveGame.scss";
 
-export default function AboveGame() {
+interface Props {
+  handleRestartClick: () => void;
+}
+export default function AboveGame({ handleRestartClick }: Props) {
   return (
     <div className="home__above-game">
       <div className="home__game-intro">
@@ -8,7 +11,11 @@ export default function AboveGame() {
         <br />
         Have a good game
       </div>
-      <button className="home__restart-button" type="button">
+      <button
+        className="home__restart-button"
+        type="button"
+        onClick={handleRestartClick}
+      >
         New Game
       </button>
     </div>
