@@ -8,13 +8,13 @@ let tilePosList: TileList = Array.from(
   () => null
 );
 
-function sortTileList(tileList: TileList) {
+function sortTileList(tileList: TileList): TileList {
   return [...tileList].sort((a, b) =>
     isNull(a) ? 1 : isNull(b) ? -1 : a.id - b.id
   );
 }
 
-export function getInitialTileList() {
+export function getInitialTileList(): TileList {
   const tile1 = makeTile(tilePosList);
   if (!tile1) return tilePosList;
   const tile1Idx = convertIndexOf2Dto1D(tile1.x, tile1.y, MAX_POS);
@@ -49,7 +49,7 @@ export function makeTile(tileList: TileList): Tile | null {
   return tile;
 }
 
-export function moveTile(x: number, y: number) {
+export function moveTile(x: number, y: number): TileList {
   const isMoveY: boolean = y !== 0;
   const isMinus: boolean = x + y < 0;
   const newTileList: TileList = [];
@@ -156,11 +156,39 @@ export function moveTile(x: number, y: number) {
       tilePosList[newTileIdx] = newTile;
     }
   }
-
   return sortTileList([...tilePosList, ...newTileList]);
 }
 
 export function resetTileList(): TileList {
   tilePosList = Array.from(new Array(MAX_POS * MAX_POS), () => null);
   return getInitialTileList();
+}
+
+export function getIsFinishGame(): boolean {
+  const isFull = tilePosList.every((item) => !!item);
+
+  if (!isFull) {
+    return false;
+  }
+  for (let i = 0; i < MAX_POS; i++) {
+    for (let j = 0; j < MAX_POS; j++) {
+      const currIdx = convertIndexOf2Dto1D(j, i, MAX_POS);
+      const currTile = tilePosList[currIdx];
+      if (j + 1 < MAX_POS) {
+        const nextXIdx = convertIndexOf2Dto1D(j + 1, i, MAX_POS);
+        const nextXTile = tilePosList[nextXIdx];
+        if (currTile?.value === nextXTile?.value) {
+          return false;
+        }
+      }
+      if (i + 1 < MAX_POS) {
+        const nextXIdx = convertIndexOf2Dto1D(j, i + 1, MAX_POS);
+        const nextXTile = tilePosList[nextXIdx];
+        if (currTile?.value === nextXTile?.value) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
 }

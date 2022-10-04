@@ -19,8 +19,9 @@ export default function Home() {
   const [bestScore, setBestScore] = useState(
     getLocalItem<number>("bestScore") || 0
   );
+  const [isFinish, setIsFinish] = useState(false);
 
-  useMoveTile({ setTileList, setScore });
+  useMoveTile({ setTileList, setScore, setIsFinish });
 
   const handleRestartClick = () => {
     const newTileList = resetTileList();
@@ -40,7 +41,7 @@ export default function Home() {
       <div className="home__container">
         <Header score={score} bestScore={bestScore} />
         <AboveGame handleRestartClick={handleRestartClick} />
-        <Game tileList={tileList} />
+        <Game tileList={tileList} isFinish={isFinish} />
       </div>
     </div>
   );

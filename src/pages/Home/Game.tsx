@@ -3,14 +3,17 @@ import cn from "classnames";
 import { MAX_POS } from "constants/tile";
 import { TileList } from "types/tile";
 import "scss/pages/Home/Game.scss";
+import GameOver from "./GameOver";
 
 interface Props {
   tileList: TileList;
+  isFinish: boolean;
 }
 
-export default function Game({ tileList }: Props) {
+export default function Game({ tileList, isFinish }: Props) {
   return (
     <div className="home__game">
+      {isFinish && <GameOver />}
       <div className="home__game-grid-container">
         {times(MAX_POS * MAX_POS, (idx) => (
           <div className="home__game-grid-cell" key={idx} />

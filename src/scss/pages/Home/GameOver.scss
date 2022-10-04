@@ -1,0 +1,13 @@
+@import "scss/common.scss";
+
+.home__game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  color: $color-white;
+  opacity: 0.8;
+  z-index: 100;
+}
