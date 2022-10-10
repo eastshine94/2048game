@@ -8,12 +8,17 @@ import GameOver from "./GameOver";
 interface Props {
   tileList: TileList;
   isFinish: boolean;
+  handleRestartClick: () => void;
 }
 
-export default function Game({ tileList, isFinish }: Props) {
+export default function Game({
+  tileList,
+  isFinish,
+  handleRestartClick,
+}: Props) {
   return (
     <div className="home__game">
-      {isFinish && <GameOver />}
+      {isFinish && <GameOver handleRestartClick={handleRestartClick} />}
       <div className="home__game-grid-container">
         {times(MAX_POS * MAX_POS, (idx) => (
           <div className="home__game-grid-cell" key={idx} />

@@ -27,6 +27,7 @@ export default function Home() {
     const newTileList = resetTileList();
     setTileList(newTileList);
     setScore(0);
+    setIsFinish(false);
   };
 
   useEffect(() => {
@@ -41,7 +42,11 @@ export default function Home() {
       <div className="home__container">
         <Header score={score} bestScore={bestScore} />
         <AboveGame handleRestartClick={handleRestartClick} />
-        <Game tileList={tileList} isFinish={isFinish} />
+        <Game
+          tileList={tileList}
+          isFinish={isFinish}
+          handleRestartClick={handleRestartClick}
+        />
       </div>
     </div>
   );
