@@ -1,13 +1,43 @@
 @import "scss/common.scss";
 
+@keyframes pop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .home__game-over {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: $color-black-70;
   color: $color-white;
-  opacity: 0.8;
   z-index: 100;
+  animation: pop 1s ease 1s;
+  animation-fill-mode: backwards;
+
+  div + div {
+    margin-top: calcPxToRem(15);
+  }
+
+  .home__game-over-title {
+    font-size: calcPxToRem(52);
+  }
+  .home__retry-btn {
+    display: inline-block;
+    padding: calcPxToRem(10) calcPxToRem(15);
+    font-size: calcPxToRem(24);
+    background-color: $color-brown2;
+    border-radius: calcPxToRem(5);
+    cursor: pointer;
+  }
 }
