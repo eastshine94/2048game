@@ -42,7 +42,7 @@
     }
 
     .home__header-best-score {
-      margin-left: 10px;
+      margin-left: calcPxToRem(10);
       &::before {
         content: "best";
       }
@@ -50,8 +50,8 @@
     .home__header-plus-score {
       position: absolute;
       color: $color-black;
-      top: calcPxToRem(10);
-      left: 0;
+      top: calcPxToRem(15);
+      left: calcPxToRem(25);
       animation: up 1s ease-in-out;
       animation-fill-mode: both;
     }
