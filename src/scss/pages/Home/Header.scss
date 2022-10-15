@@ -47,5 +47,23 @@
         content: "best";
       }
     }
+    .home__header-plus-score {
+      position: absolute;
+      color: $color-black;
+      top: calcPxToRem(10);
+      left: 0;
+      animation: up 1s ease-in-out;
+      animation-fill-mode: both;
+    }
+  }
+}
+
+@keyframes up {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(calcPxToRem(-50));
   }
 }
