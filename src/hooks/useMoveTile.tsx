@@ -6,12 +6,14 @@ import { getIsFinishGame, moveTile } from "utils/tile";
 interface Props {
   setTileList: React.Dispatch<React.SetStateAction<TileList>>;
   setScore: React.Dispatch<React.SetStateAction<number>>;
+  setPlusScore: React.Dispatch<React.SetStateAction<number>>;
   setIsFinish: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function useMoveTile({
   setTileList,
   setScore,
+  setPlusScore,
   setIsFinish,
 }: Props) {
   const moveAndAdd = useCallback(
@@ -21,11 +23,12 @@ export default function useMoveTile({
       const score = newTileList.reduce((acc, curr) => {
         return curr?.isMerged ? acc + curr.value : acc;
       }, 0);
+      setPlusScore(score);
       setScore((v) => v + score);
       const isFinish = getIsFinishGame();
       setIsFinish(isFinish);
     },
-    [setIsFinish, setScore, setTileList]
+    [setIsFinish, setPlusScore, setScore, setTileList]
   );
 
   const handleKeyDown = useCallback(

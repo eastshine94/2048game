@@ -19,14 +19,16 @@ export default function Home() {
   const [bestScore, setBestScore] = useState(
     getLocalItem<number>("bestScore") || 0
   );
+  const [plusScore, setPlusScore] = useState<number>(0);
   const [isFinish, setIsFinish] = useState(false);
 
-  useMoveTile({ setTileList, setScore, setIsFinish });
+  useMoveTile({ setTileList, setScore, setPlusScore, setIsFinish });
 
   const handleRestartClick = () => {
     const newTileList = resetTileList();
     setTileList(newTileList);
     setScore(0);
+    setPlusScore(0);
     setIsFinish(false);
   };
 
@@ -40,7 +42,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home__container">
-        <Header score={score} bestScore={bestScore} />
+        <Header score={score} bestScore={bestScore} plusScore={plusScore} />
         <AboveGame handleRestartClick={handleRestartClick} />
         <Game
           tileList={tileList}
