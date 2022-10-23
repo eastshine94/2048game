@@ -1,0 +1,46 @@
+@import "scss/common.scss";
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.home__winning {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-yellow-70;
+  color: $color-white;
+  z-index: 100;
+  animation: pop 1s ease 1s;
+  animation-fill-mode: backwards;
+
+  .home__winning-title {
+    font-size: calcPxToRem(52);
+  }
+  button {
+    border: none;
+    box-shadow: none;
+    margin-top: calcPxToRem(15);
+    color: $color-white;
+    display: inline-block;
+    padding: calcPxToRem(10) calcPxToRem(10);
+    font-size: calcPxToRem(20);
+    background-color: $color-brown2;
+    border-radius: calcPxToRem(5);
+    cursor: pointer;
+  }
+  button + button {
+    margin-left: calcPxToRem(10);
+  }
+}

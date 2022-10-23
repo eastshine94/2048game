@@ -4,6 +4,7 @@ import { MAX_POS } from "constants/tile";
 import { TileList } from "types/tile";
 import "scss/pages/Home/Game.scss";
 import GameOver from "./GameOver";
+import GameWinning from "./Winning";
 
 interface Props {
   tileList: TileList;
@@ -18,6 +19,7 @@ export default function Game({
 }: Props) {
   return (
     <div className="home__game">
+      <GameWinning handleRestartClick={handleRestartClick} />
       {isFinish && <GameOver handleRestartClick={handleRestartClick} />}
       <div className="home__game-grid-container">
         {times(MAX_POS * MAX_POS, (idx) => (
